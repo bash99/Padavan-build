@@ -45,9 +45,6 @@ jobs:
         echo "configs/templates/$TNAME.config not found "
         exit 1
         fi
-        ## 修正网易云的bin包含错误
-        sed -i 's/CONFIG_FIRMWARE_INCLUDE_WYY)/CONFIG_FIRMWARE_INCLUDE_WYYBIN)/g' user/Makefile
-        ## end 修正网易云的bin包含错误
         cp -f configs/templates/$TNAME.config .config
         sed -i 's/CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=n/CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=y/g' .config
         ################################################################################################
@@ -93,6 +90,9 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_SRELAY=n" >> .config #可以不集成
         echo "CONFIG_FIRMWARE_INCLUDE_WYY=y" >> .config #网易云解锁
         echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=n" >> .config #网易云解锁GO版本执行文件（4M多）注意固件超大小,不集成会自动下载
+        ## 修正网易云的bin包含错误
+        sed -i '/\usr\/bin\/UnblockNeteaseMusic/d' user/unblockmusic/Makefile
+        ## end 修正网易云的bin包含错误
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=n" >> .config #zerotier ~1.3M
         echo "CONFIG_FIRMWARE_INCLUDE_DROPBEAR=y" >> .config #dropbear ~0.4M
         #########################################################################################
